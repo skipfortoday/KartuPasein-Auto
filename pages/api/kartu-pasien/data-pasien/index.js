@@ -3,7 +3,7 @@ const qryKartuPasien = require("../../../../src/config/sql-kartu-pasien");
 export default async function handler(req, res) {
   try {
     let querydata = await qryKartuPasien.query(
-      `SELECT NKP, NAMA FROM tblDataPasien`
+      `SELECT NKP, Nama FROM tblDataPasien`
     );
     res.status(200).json({
       success: true,
