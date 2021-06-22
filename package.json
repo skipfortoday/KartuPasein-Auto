@@ -4,7 +4,9 @@
   "dependencies": {
     "@material-ui/core": "latest",
     "@material-ui/icons": "latest",
+    "@material-ui/lab": "^4.0.0-alpha.58",
     "@material-ui/styles": "latest",
+    "axios": "^0.21.1",
     "firebase": "^8.6.8",
     "jsonwebtoken": "^8.5.1",
     "mui-datatables": "^3.7.7",
