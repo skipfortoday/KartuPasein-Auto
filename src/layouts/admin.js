@@ -217,7 +217,11 @@ export default function MiniDrawer({ children }) {
                 </ListItemIcon>
                 <ListItemText primary="Beauty Terapist  " />
               </ListItem>
-              <ListItem button className={classes.nested}>
+              <ListItem
+                button
+                className={classes.nested}
+                onClick={() => router.push("/kartu-pasien/lokasi-foto-before")}
+              >
                 <ListItemIcon>
                   <BurstModeRoundedIcon />
                 </ListItemIcon>

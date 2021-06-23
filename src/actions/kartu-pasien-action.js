@@ -4,6 +4,7 @@ import {
   GET_KARTUPASIEN_BA,
   GET_KARTUPASIEN_DOKTER,
   GET_KARTUPASIEN_PERAWATAN,
+  GET_KARTUPASIEN_LOKASIFOTOBEFORE,
 } from "../constants";
 
 export const getDataPasien = () => {
@@ -106,13 +107,13 @@ export const getPerawatan = () => {
   };
 };
 
-export const getFotoBefore = () => {
+export const getLokasiFotoBefore = () => {
   return (dispatch) => {
     axios
-      .get(`http://localhost:3000/api/kartu-pasien/perawatan/data`)
+      .get(`http://localhost:3000/api/kartu-pasien/lokasi-foto-before/data`)
       .then(function (response) {
         dispatch({
-          type: GET_KARTUPASIEN_PERAWATAN,
+          type: GET_KARTUPASIEN_LOKASIFOTOBEFORE,
           payload: {
             data: response.data.data,
             errorMessage: false,
@@ -121,7 +122,7 @@ export const getFotoBefore = () => {
       })
       .catch(function (error) {
         dispatch({
-          type: GET_KARTUPASIEN_PERAWATAN,
+          type: GET_KARTUPASIEN_LOKASIFOTOBEFORE,
           payload: {
             data: false,
             errorMessage: error,
