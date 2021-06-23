@@ -20,7 +20,7 @@ export default async function handler(req, res) {
         console.log(querydata);
         res.status(200).json({
           success: true,
-          message: "Berhasil Mendapatkan Data",
+          message: "Berhasil Post Data",
           data: querydata,
         });
       } catch (error) {
@@ -34,8 +34,8 @@ export default async function handler(req, res) {
     } else if (req.method === "GET") {
       try {
         let querydata = await qryKartuPasien.query(
-          `SELECT NKP, Nama , Alamat, CONVERT(varchar, TglAuto,113) as TglAuto 
-        FROM tblDataPasien ORDER BY TglAuto DESC`
+          `SELECT IDDokter, NamaDokter , Status, CONVERT(varchar, TglAuto,113) as TglAuto 
+        FROM tblDokter ORDER BY TglAuto DESC`
         );
         res.status(200).json({
           success: true,

@@ -5,22 +5,13 @@ export default async function handler(req, res) {
     if (req.method === "POST") {
       try {
         let querydata = await qryKartuPasien.query(
-          `INSERT INTO tmpTblDataPasien (
-            NKP,NoAuto,TglAwalDaftar,Nama,Alamat,TelpRumah,
-            HP,Fax,TglLahir,NoDist,NoSponsor,Status,Keterangan,
-            TglActivitas,JamActivitas,UserEntry,LoginComp,CompName,PasienLama,Sponsor,
-            Exported,LastCallDateUltah,tempCallPasien,tempCallDate,
-            tempCallTime,tempCallKet,tempNoAutoHistoryCallPasienUltah,
-            IDSponsor,LokasiFoto,NoKTP,NamaKTP,TempatLahir,AlamatKTP,
-            TelpKTP,Kota,KotaKTP,KotaSMS,StatusLtPack,NoDistLtPack,
-            IDSponsorLtPack,PinBB,StatusDiskonPasien,TglAuto
-            ) VALUES ${req.body.data}
+          ` ${req.body.data}
             ;`
         );
         console.log(querydata);
         res.status(200).json({
           success: true,
-          message: "Berhasil Mendapatkan Data",
+          message: "Berhasil Post Data",
           data: querydata,
         });
       } catch (error) {
@@ -34,8 +25,10 @@ export default async function handler(req, res) {
     } else if (req.method === "GET") {
       try {
         let querydata = await qryKartuPasien.query(
-          `SELECT NKP, Nama , Alamat, CONVERT(varchar, TglAuto,113) as TglAuto 
-        FROM tblDataPasien ORDER BY TglAuto DESC`
+          `SELECT NoAuto, LokasiFotoBefore,
+        CONVERT(varchar, TglAuto,113) as TglAuto 
+        FROM tblPerawatanLokasiFotoBefore
+        ORDER BY TglAuto DESC`
         );
         res.status(200).json({
           success: true,

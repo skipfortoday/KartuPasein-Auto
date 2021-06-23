@@ -5,7 +5,6 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import wrapper from "../src/store";
 import theme from "../src/utils/theme";
-import MiniDrawer from "../src/layouts/admin";
 
 class _App extends App {
   static async getInitialProps({ Component, ctx }) {

@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/router";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -18,12 +19,25 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import BackButton from "../components/backbutton";
+import { AccountBox } from "@material-ui/icons";
+import SupervisedUserCircleRoundedIcon from "@material-ui/icons/SupervisedUserCircleRounded";
+import AssignmentIndRoundedIcon from "@material-ui/icons/AssignmentIndRounded";
+import PermMediaRoundedIcon from "@material-ui/icons/PermMediaRounded";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import HotelRounded from "@material-ui/icons/HotelRounded";
+import BurstModeRoundedIcon from "@material-ui/icons/BurstModeRounded";
+import HowToRegRoundedIcon from "@material-ui/icons/HowToRegRounded";
+import Collapse from "@material-ui/core/Collapse";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+  },
+  nested: {
+    paddingLeft: theme.spacing(4),
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -84,9 +98,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MiniDrawer({ children }) {
+  const router = useRouter();
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [openKartuPasien, setOpenKartuPasien] = React.useState(true);
+
+  const handleClick = () => {
+    setOpenKartuPasien(!openKartuPasien);
+    console.log(openKartuPasien);
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -147,14 +168,69 @@ export default function MiniDrawer({ children }) {
         </div>
         <Divider />
         <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button onClick={handleClick}>
+            <ListItemIcon>
+              <AccountBox />
+            </ListItemIcon>
+            <ListItemText primary="Kartu Pasien" />
+            {openKartuPasien ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={openKartuPasien} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItem
+                button
+                className={classes.nested}
+                onClick={() => router.push("/kartu-pasien/data-pasien")}
+              >
+                <ListItemIcon>
+                  <SupervisedUserCircleRoundedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Data Pasien" />
+              </ListItem>
+              <ListItem
+                button
+                className={classes.nested}
+                onClick={() => router.push("/kartu-pasien/perawatan")}
+              >
+                <ListItemIcon>
+                  <HotelRounded />
+                </ListItemIcon>
+                <ListItemText primary="Perawatan" />
+              </ListItem>
+              <ListItem
+                button
+                className={classes.nested}
+                onClick={() => router.push("/kartu-pasien/dokter")}
+              >
+                <ListItemIcon>
+                  <AssignmentIndRoundedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Dokter" />
+              </ListItem>
+              <ListItem
+                button
+                className={classes.nested}
+                onClick={() => router.push("/kartu-pasien/ba")}
+              >
+                <ListItemIcon>
+                  <HowToRegRoundedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Beauty Terapist  " />
+              </ListItem>
+              <ListItem button className={classes.nested}>
+                <ListItemIcon>
+                  <BurstModeRoundedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Lokasi Foto Before" />
+              </ListItem>
+              <ListItem button className={classes.nested}>
+                <ListItemIcon>
+                  <PermMediaRoundedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Lokasi Foto After" />
+              </ListItem>
+            </List>
+          </Collapse>
         </List>
         <Divider />
         <List>
