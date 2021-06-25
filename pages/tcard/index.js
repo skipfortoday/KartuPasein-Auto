@@ -1,7 +1,7 @@
 import React from "react";
 import CommingSoon from "../../src/components/commingsoon";
 import Admin from "../../src/layouts/admin";
-export default function Barcode() {
+export default function Tcard() {
   return (
     <>
       <CommingSoon />
@@ -9,4 +9,4 @@ export default function Barcode() {
   );
 }
 
-Barcode.layout = Admin;
+Tcard.layout = Admin;

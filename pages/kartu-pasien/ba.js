@@ -47,7 +47,7 @@ const ba = (props) => {
     <>
       <TablefixHeader
         data={props.getBA}
-        title="Kartu Pasien Table BA"
+        title="Kartu Pasien Table BA (Beauty Therapist)"
         columns={columns}
       />
     </>

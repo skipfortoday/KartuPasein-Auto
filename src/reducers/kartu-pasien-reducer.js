@@ -4,6 +4,7 @@ import {
   GET_KARTUPASIEN_DOKTER,
   GET_KARTUPASIEN_PERAWATAN,
   GET_KARTUPASIEN_LOKASIFOTOBEFORE,
+  GET_KARTUPASIEN_LOKASIFOTOAFTER,
 } from "../constants";
 
 let initialState = {
@@ -17,6 +18,8 @@ let initialState = {
   errorPerawatan: false,
   getLokasiFotoBefore: false,
   errorLokasiFotoBefore: false,
+  getLokasiFotoAfter: false,
+  errorLokasiFotoAfter: false,
 };
 
 const kartuPasien = (state = initialState, action) => {
@@ -50,6 +53,12 @@ const kartuPasien = (state = initialState, action) => {
         ...state,
         getLokasiFotoBefore: action.payload.data,
         errorLokasiFotoBefore: action.payload.errorMessage,
+      };
+    case GET_KARTUPASIEN_LOKASIFOTOAFTER:
+      return {
+        ...state,
+        getLokasiFotoAfter: action.payload.data,
+        errorLokasiFotoAfter: action.payload.errorMessage,
       };
     default:
       return state;

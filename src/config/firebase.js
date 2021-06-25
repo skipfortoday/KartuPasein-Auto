@@ -13,7 +13,7 @@ var firebaseConfig = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+  // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       console.log("login");

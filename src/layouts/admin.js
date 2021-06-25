@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
+import CloseIcon from "@material-ui/icons/Close";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
@@ -11,13 +12,11 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
+import CreditCardRoundedIcon from "@material-ui/icons/CreditCardRounded";
 import BackButton from "../components/backbutton";
 import { AccountBox } from "@material-ui/icons";
 import SupervisedUserCircleRoundedIcon from "@material-ui/icons/SupervisedUserCircleRounded";
@@ -28,7 +27,12 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import HotelRounded from "@material-ui/icons/HotelRounded";
 import BurstModeRoundedIcon from "@material-ui/icons/BurstModeRounded";
 import HowToRegRoundedIcon from "@material-ui/icons/HowToRegRounded";
+import SubtitlesRoundedIcon from "@material-ui/icons/SubtitlesRounded";
 import Collapse from "@material-ui/core/Collapse";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import DnsRoundedIcon from "@material-ui/icons/DnsRounded";
+import SyncProblemRoundedIcon from "@material-ui/icons/SyncProblemRounded";
+import DeveloperBoardIcon from "@material-ui/icons/DeveloperBoard";
 
 const drawerWidth = 240;
 
@@ -159,14 +163,53 @@ export default function MiniDrawer({ children }) {
       >
         <div className={classes.toolbar}>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
+            {theme.direction === "rtl" ? <ChevronRightIcon /> : <CloseIcon />}
           </IconButton>
         </div>
         <Divider />
+        <List>
+          <ListItem button onClick={handleClick}>
+            <ListItemIcon>
+              <DashboardIcon />
+            </ListItemIcon>
+            <ListItemText primary="Master" />
+            {openKartuPasien ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={openKartuPasien} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItem
+                button
+                className={classes.nested}
+                onClick={() => router.push("/master/status-server")}
+              >
+                <ListItemIcon>
+                  <DeveloperBoardIcon />
+                </ListItemIcon>
+                <ListItemText primary="Status Server" />
+              </ListItem>
+              <ListItem
+                button
+                className={classes.nested}
+                onClick={() => router.push("/kartu-pasien/perawatan")}
+              >
+                <ListItemIcon>
+                  <DnsRoundedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Master Data" />
+              </ListItem>
+              <ListItem
+                button
+                className={classes.nested}
+                onClick={() => router.push("/kartu-pasien/perawatan")}
+              >
+                <ListItemIcon>
+                  <SyncProblemRoundedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Import Data" />
+              </ListItem>
+            </List>
+          </Collapse>
+        </List>
         <List>
           <ListItem button onClick={handleClick}>
             <ListItemIcon>
@@ -227,7 +270,11 @@ export default function MiniDrawer({ children }) {
                 </ListItemIcon>
                 <ListItemText primary="Lokasi Foto Before" />
               </ListItem>
-              <ListItem button className={classes.nested}>
+              <ListItem
+                button
+                className={classes.nested}
+                onClick={() => router.push("/kartu-pasien/lokasi-foto-after")}
+              >
                 <ListItemIcon>
                   <PermMediaRoundedIcon />
                 </ListItemIcon>
@@ -238,14 +285,21 @@ export default function MiniDrawer({ children }) {
         </List>
         <Divider />
         <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button onClick={() => router.push("/barcode")}>
+            <ListItemIcon>
+              <SubtitlesRoundedIcon />
+            </ListItemIcon>
+            <ListItemText primary="Barcode" />
+          </ListItem>
+        </List>
+        <Divider />
+        <List>
+          <ListItem button onClick={() => router.push("/tcard")}>
+            <ListItemIcon>
+              <CreditCardRoundedIcon />
+            </ListItemIcon>
+            <ListItemText primary="Tcard" />
+          </ListItem>
         </List>
       </Drawer>
       <main className={classes.content}>

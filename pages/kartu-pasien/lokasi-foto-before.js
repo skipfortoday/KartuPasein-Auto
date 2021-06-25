@@ -12,19 +12,13 @@ const mapStateToProps = (state) => {
 
 const columns = [
   {
-    name: "IDDokter",
+    name: "NoAuto",
     options: {
       filter: false,
     },
   },
   {
-    name: "NamaDokter",
-    options: {
-      filter: false,
-    },
-  },
-  {
-    name: "Status",
+    name: "LokasiFotoBefore",
     options: {
       filter: false,
     },
@@ -39,7 +33,7 @@ const columns = [
 
 const LokasiFotoBefore = (props) => {
   useEffect(() => {
-    if (!props.LokasiFotoBefore) {
+    if (!props.getLokasiFotoBefore) {
       props.dispatch(getLokasiFotoBefore());
     }
   });
