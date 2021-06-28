@@ -1,9 +1,14 @@
 import React from "react";
 import Admin from "../../../src/layouts/admin";
+import CommingSoon from "../../../src/components/commingsoon";
 
-MasterData = () => {
-  return <div></div>;
+const MasterData = () => {
+  return (
+    <div>
+      <CommingSoon />
+    </div>
+  );
 };
 
 export default MasterData;
-MasterData.Layout = Admin;
+MasterData.layout = Admin;

@@ -43,7 +43,7 @@ export default function CommingSoon() {
           </Grid>
         </Grid>
       </CardContent>
-      <CardActions onClick={() => router.push("/dashboard")}>
+      <CardActions onClick={() => router.push("/master/status-server")}>
         <Button size="small">Kembali Ke Dashboard</Button>
       </CardActions>
     </Card>

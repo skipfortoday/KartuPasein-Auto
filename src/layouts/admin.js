@@ -107,10 +107,14 @@ export default function MiniDrawer({ children }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [openKartuPasien, setOpenKartuPasien] = React.useState(true);
+  const [openMaster, setOpenMaster] = React.useState(true);
 
   const handleClick = () => {
     setOpenKartuPasien(!openKartuPasien);
-    console.log(openKartuPasien);
+  };
+
+  const handleClickMaster = () => {
+    setOpenMaster(!openMaster);
   };
 
   const handleDrawerOpen = () => {
@@ -168,14 +172,14 @@ export default function MiniDrawer({ children }) {
         </div>
         <Divider />
         <List>
-          <ListItem button onClick={handleClick}>
+          <ListItem button onClick={handleClickMaster}>
             <ListItemIcon>
               <DashboardIcon />
             </ListItemIcon>
             <ListItemText primary="Master" />
-            {openKartuPasien ? <ExpandLess /> : <ExpandMore />}
+            {openMaster ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
-          <Collapse in={openKartuPasien} timeout="auto" unmountOnExit>
+          <Collapse in={openMaster} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItem
                 button
@@ -190,7 +194,7 @@ export default function MiniDrawer({ children }) {
               <ListItem
                 button
                 className={classes.nested}
-                onClick={() => router.push("/kartu-pasien/perawatan")}
+                onClick={() => router.push("/master/master-data")}
               >
                 <ListItemIcon>
                   <DnsRoundedIcon />
@@ -200,7 +204,7 @@ export default function MiniDrawer({ children }) {
               <ListItem
                 button
                 className={classes.nested}
-                onClick={() => router.push("/kartu-pasien/perawatan")}
+                onClick={() => router.push("/master/import-data")}
               >
                 <ListItemIcon>
                   <SyncProblemRoundedIcon />
