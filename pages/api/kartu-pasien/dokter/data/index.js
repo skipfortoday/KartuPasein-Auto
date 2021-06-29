@@ -1,4 +1,6 @@
 const qryKartuPasien = require("../../../../../src/config/sql-kartu-pasien");
+import firebase from "../../../../../src/config/firebase";
+import moment from "moment";
 
 export default async function handler(req, res) {
   try {
@@ -12,7 +14,8 @@ export default async function handler(req, res) {
             ;`
         );
 
-        let mergedata = await qryKartuPasien.execute(`MERGE tblDokter AS Target
+        let mergedata = await qryKartuPasien.execute(`
+         MERGE tblDokter AS Target
          USING (SELECT * FROM tmpDokter) AS Source
          ON (Target.IDDokter = Source.IDDokter)
          WHEN MATCHED THEN
@@ -24,9 +27,13 @@ export default async function handler(req, res) {
              INSERT (IDDokter,NamaDokter,Status,Exported,TglAuto)
              VALUES (Source.IDDokter, Source.NamaDokter, Source.Status,
          Source.Exported,Source.TglAuto)
-         
          OUTPUT $action, Inserted.*, Deleted.*;`);
-
+        firebase
+          .database()
+          .ref("/datapasien")
+          .update({
+            sb2: moment.parseZone(moment()).format("YYYY-MM-DD HH:mm:ss"),
+          });
         res.status(200).json({
           success: true,
           message: "Berhasil Post Data",

@@ -1,5 +1,6 @@
 import firebase from "firebase";
-var firebaseConfig = {
+
+const config = {
   apiKey: "AIzaSyBEQW9jtmuXbFern0irXR1umEgkmBr8-3Q",
   authDomain: "tcard-syc.firebaseapp.com",
   databaseURL:
@@ -11,19 +12,18 @@ var firebaseConfig = {
   measurementId: "G-NTWN5RBFG4",
 };
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-  // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
-  firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-      console.log("login");
-    } else {
-      console.log("logout");
-    }
-  });
-}
+export default !firebase.apps.length
+  ? firebase.initializeApp(config)
+  : firebase.app();
+// var firebaseConfig = {};
 
-const auth = firebase.auth();
-const provider = new firebase.auth.GoogleAuthProvider();
+// if (!firebase.apps.length) {
+//   firebase.initializeApp(firebaseConfig);
+// } else {
+//   ("eror");
+// }
+// const auth = firebase.auth();
+// const provider = new firebase.auth.GoogleAuthProvider();
+// const fconn = firebase.database();
 
-export { auth, provider };
+// export { auth, provider, fconn };

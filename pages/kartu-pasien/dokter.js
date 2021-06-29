@@ -3,6 +3,14 @@ import Admin from "../../src/layouts/admin";
 import TablefixHeader from "../../src/components/tablefixHeader";
 import { getDokter } from "../../src/actions/kartu-pasien-action";
 import { connect } from "react-redux";
+import firebase from "../../src/config/firebase";
+
+// console.log(firebase.name);
+// console.log(fconn.ref("/user")
+// //   .on("value", (snapshot) => {
+// //     const data = snapshot.val();
+// //     console.log(data);
+// // //   });;
 
 const mapStateToProps = (state) => {
   return {
@@ -38,9 +46,35 @@ const columns = [
 ];
 
 const Dokter = (props) => {
+  // console.log(datahm);
+
+  // const dbRef = firebase.database().ref();
+  // // console.log(dbRef.child("datapasien").get());
+  // dbRef
+  //   .child("datapasien")
+  //   .get()
+  //   .then((snapshot) => {
+  //     if (snapshot.exists()) {
+  //       console.log(snapshot.val());
+  //     } else {
+  //       console.log("No data available");
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.error(error);
+  //   });
+  // // console.log(datahm, "asu");
   useEffect(() => {
     if (!props.getDokter) {
       props.dispatch(getDokter());
+      firebase
+        .database()
+        .ref("/datapasien")
+        .on("value", (snapshot) => {
+          const data = snapshot.val();
+          console.log(data);
+          props.dispatch(getDokter());
+        });
     }
   });
   return (
