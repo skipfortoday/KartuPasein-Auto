@@ -50,7 +50,7 @@ export default async function handler(req, res) {
     } else if (req.method === "GET") {
       try {
         let querydata = await qryKartuPasien.query(
-          `SELECT IDDokter, NamaDokter , Status, CONVERT(varchar, TglAuto,113) as TglAuto 
+          `SELECT IDDokter, NamaDokter , Status, CONVERT(varchar, TglAuto,113) as TimeSyc 
         FROM tblDokter ORDER BY TglAuto DESC`
         );
         res.status(200).json({
@@ -73,7 +73,7 @@ export default async function handler(req, res) {
       });
     }
   } catch (error) {
-    // console.log(error);
-    res.json("hmm");
+    console.log(error);
+    res.json("Eror Sycron dokter ", error);
   }
 }

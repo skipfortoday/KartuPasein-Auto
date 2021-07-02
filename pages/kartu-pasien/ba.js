@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Admin from "../../src/layouts/admin";
 import TablefixHeader from "../../src/components/tablefixHeader";
 import { getBA } from "../../src/actions/kartu-pasien-action";
+import firebase from "../../src/config/firebase";
 import { connect } from "react-redux";
 
 const mapStateToProps = (state) => {
@@ -30,7 +31,7 @@ const columns = [
     },
   },
   {
-    name: "TglAuto",
+    name: "WaktuSyc",
     options: {
       filter: false,
     },
@@ -41,6 +42,14 @@ const ba = (props) => {
   useEffect(() => {
     if (!props.getBA) {
       props.dispatch(getBA());
+      firebase
+        .database()
+        .ref("/datapasien")
+        .on("value", (snapshot) => {
+          const data = snapshot.val();
+          console.log(data);
+          props.dispatch(getBA());
+        });
     }
   });
   return (
