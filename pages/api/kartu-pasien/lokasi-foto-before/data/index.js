@@ -6,7 +6,8 @@ export default async function handler(req, res) {
   try {
     if (req.method === "POST") {
       try {
-        let querydata = await qryKartuPasien.execute(
+        console.log(req.body.data);
+        const gen = await qryKartuPasien.execute(
           `
           DELETE FROM "dbo"."tmpPerawatanLokasiFotoBefore";
           INSERT INTO "tmpPerawatanLokasiFotoBefore"
@@ -14,20 +15,26 @@ export default async function handler(req, res) {
            "TglActivitas","JamActivitas","LokasiFotoBefore",TglAuto) VALUES ${req.body.data}
             ;`
         );
-
         let mergedata = await qryKartuPasien.execute(`
-        MERGE tblBA AS Target
-        USING (SELECT * FROM tmpBA) AS Source
-        ON (Target.IDBA = Source.IDBA)
+        MERGE tblPerawatanLokasiFotoBefore AS Target
+        USING (SELECT * FROM tmpPerawatanLokasiFotoBefore) AS Source
+        ON (Target.NoAuto = Source.NoAuto)
         WHEN MATCHED THEN
-            UPDATE SET Target.NamaBA = Source.NamaBA, 
-                    Target.Status = Source.Status,
-                Target.Exported = Source.Exported, 
+            UPDATE SET Target.NoAutoPerawatan = Source.NoAutoPerawatan, 
+                Target.Keterangan = Source.Keterangan,
+                Target.UserEntry = Source.UserEntry, 
+                Target.LoginComp = Source.LoginComp, 
+                Target.CompName = Source.CompName, 
+                Target.TglActivitas = Source.TglActivitas, 
+                Target.JamActivitas = Source.JamActivitas, 
+                Target.LokasiFotoBefore = Source.LokasiFotoBefore, 
                 Target.TglAuto = Source.TglAuto 		  
         WHEN NOT MATCHED BY TARGET THEN
-            INSERT (IDBA,NamaBA,Status,Exported,TglAuto)
-            VALUES (Source.IDBA, Source.NamaBA, Source.Status,
-        Source.Exported,Source.TglAuto)
+            INSERT (NoAuto, NoAutoPerawatan,Keterangan, UserEntry ,LoginComp,CompName,
+            TglActivitas,JamActivitas,LokasiFotoBefore,TglAuto)
+            VALUES (Source.NoAuto, Source.NoAutoPerawatan,Source.Keterangan, 
+              Source.UserEntry ,Source.LoginComp,Source.CompName,
+              Source.TglActivitas,Source.JamActivitas,Source.LokasiFotoBefore,Source.TglAuto)
         OUTPUT $action, Inserted.*, Deleted.*;`);
         firebase
           .database()
