@@ -6,12 +6,9 @@ export default async function handler(req, res) {
   try {
     if (req.method === "POST") {
       try {
-        let q = `DELETE FROM [KartuPasien_SB02_Test].[dbo].[tmpPerawatanLokasiFotoAfter];
-        INSERT INTO [KartuPasien_SB02_Test].[dbo].[tmpPerawatanLokasiFotoAfter]
-        ("NoAuto", "NoAutoPerawatan", "Keterangan", "UserEntry", "LoginComp", "CompName", "TglActivitas", "JamActivitas", "LokasiFotoAfter", "TglAuto") VALUES ${req.body.data
-          .replace(/\s+/g, " ")
-          .trim()};`;
-        console.log(q);
+        let q = `DELETE FROM tmpPerawatanLokasiFotoAfter;
+        INSERT INTOtmpPerawatanLokasiFotoAfter
+        ("NoAuto", "NoAutoPerawatan", "Keterangan", "UserEntry", "LoginComp", "CompName", "TglActivitas", "JamActivitas", "LokasiFotoAfter", "TglAuto") VALUES ${req.body.data};`;
         await qryKartuPasien.execute(q);
         await qryKartuPasien.execute(
           ` MERGE tblPerawatanLokasiFotoAfter AS Target
