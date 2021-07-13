@@ -6,38 +6,33 @@ export default async function handler(req, res) {
   try {
     if (req.method === "POST") {
       try {
-        let querydata = await qryKartuPasien.execute(
-          `
-          DELETE FROM "dbo"."tmpBA";
-          INSERT INTO "tmpBA"
-           ("IDBA", "NamaBA", "Status", "Exported" , TglAuto) VALUES ${req.body.data}
-            ;`
-        );
-
-        let mergedata = await qryKartuPasien.execute(`
-        MERGE tblBA AS Target
-        USING (SELECT * FROM tmpBA) AS Source
-        ON (Target.IDBA = Source.IDBA)
-        WHEN MATCHED THEN
-            UPDATE SET Target.NamaBA = Source.NamaBA, 
-                    Target.Status = Source.Status,
-                Target.Exported = Source.Exported, 
-                Target.TglAuto = Source.TglAuto 		  
-        WHEN NOT MATCHED BY TARGET THEN
-            INSERT (IDBA,NamaBA,Status,Exported,TglAuto)
-            VALUES (Source.IDBA, Source.NamaBA, Source.Status,
-        Source.Exported,Source.TglAuto)
-        OUTPUT $action, Inserted.*, Deleted.*;`);
-        firebase
+        await qryKartuPasien.execute(`
+            SELECT Top 0 * INTO "#tmpBA" FROM "tblBA";
+            INSERT INTO "#tmpBA"
+                        ("IDBA", "NamaBA", "Status", "Exported" , TglAuto) VALUES ${req.body.data};
+            MERGE tblBA AS Target
+            USING (SELECT * FROM #tmpBA) AS Source
+                ON (Target.IDBA = Source.IDBA)
+                WHEN MATCHED THEN
+                     UPDATE SET Target.NamaBA = Source.NamaBA, 
+                               Target.Status = Source.Status,
+                               Target.Exported = Source.Exported, 
+                               Target.TglAuto = Source.TglAuto 		    
+                WHEN NOT MATCHED BY TARGET THEN
+                          INSERT (IDBA,NamaBA,Status,Exported,TglAuto)
+                          VALUES (Source.IDBA, Source.NamaBA, Source.Status,
+                                  Source.Exported,Source.TglAuto);
+          `);
+        await firebase
           .database()
           .ref("/datapasien")
           .update({
-            sb2: moment.parseZone(moment()).format("YYYY-MM-DD HH:mm:ss"),
+            sb2: moment().format("YYYY-MM-DD HH:mm:ss"),
           });
         res.status(200).json({
           success: true,
           message: "Berhasil Post Data",
-          data: mergedata,
+          data: req.body.data,
         });
       } catch (error) {
         console.log(error);
