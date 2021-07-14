@@ -1,13 +1,16 @@
 const qryKartuPasien = require("../../../../../src/config/sql-kartu-pasien");
 import firebase from "../../../../../src/config/firebase";
 import moment from "moment";
+import { LocalConvenienceStoreOutlined } from "@material-ui/icons";
 
 export default async function handler(req, res) {
   try {
     if (req.method === "POST") {
       try {
-        let q = `DELETE FROM tmpPerawatanLokasiFotoAfter;
-        INSERT INTOtmpPerawatanLokasiFotoAfter
+        console.log(req.body.data);
+        let q = `
+        DELETE FROM tmpPerawatanLokasiFotoAfter;
+        INSERT INTO tmpPerawatanLokasiFotoAfter
         ("NoAuto", "NoAutoPerawatan", "Keterangan", "UserEntry", "LoginComp", "CompName", "TglActivitas", "JamActivitas", "LokasiFotoAfter", "TglAuto") VALUES ${req.body.data};`;
         await qryKartuPasien.execute(q);
         await qryKartuPasien.execute(
@@ -32,7 +35,7 @@ export default async function handler(req, res) {
                         VALUES  (Source.NoAuto, Source.NoAutoPerawatan, Source.Keterangan, Source.UserEntry, Source.LoginComp, Source.CompName, Source.TglActivitas, Source.JamActivitas, Source.LokasiFotoAfter, Source.TglAuto)
                   OUTPUT $action, Inserted.*, Deleted.*;`
         );
-        await firebase
+        firebase
           .database()
           .ref("/datapasien")
           .update({
