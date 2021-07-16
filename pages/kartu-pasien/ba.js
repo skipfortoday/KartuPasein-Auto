@@ -4,6 +4,7 @@ import TablefixHeader from "../../src/components/tablefixHeader";
 import { getBA } from "../../src/actions/kartu-pasien-action";
 import firebase from "../../src/config/firebase";
 import { connect } from "react-redux";
+import BottomNav from "../../src/layouts/bottomNav";
 
 const mapStateToProps = (state) => {
   return {
@@ -63,5 +64,5 @@ const ba = (props) => {
   );
 };
 
-ba.layout = Admin;
+ba.layout = BottomNav;
 export default connect(mapStateToProps, null)(ba);

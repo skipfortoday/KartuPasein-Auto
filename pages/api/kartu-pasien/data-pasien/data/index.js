@@ -6,10 +6,9 @@ export default async function handler(req, res) {
   try {
     if (req.method === "POST") {
       try {
-        let querydata = await qryKartuPasien.execute(
-          `
-          DELETE FROM "dbo"."tmpDataPasien";
-          INSERT INTO "tmpDataPasien"
+        await qryKartuPasien.execute(`
+        SELECT Top 0 * INTO "#tmpDataPasien" FROM "tblDataPasien";
+        INSERT INTO "#tmpDataPasien"
            ("NKP"
             ,"NoAuto"
             ,"TglAwalDaftar"
@@ -52,13 +51,9 @@ export default async function handler(req, res) {
             ,"IDSponsorLtPack"
             ,"PinBB"
             ,"StatusDiskonPasien"
-            ,"TglAuto") VALUES ${req.body.data}
-            ;`
-        );
-
-        let mergedata = await qryKartuPasien.execute(`
+            ,"TglAuto") VALUES ${req.body.data};
         MERGE tblDataPasien AS Target
-        USING (SELECT * FROM tmpDataPasien) AS Source
+        USING (SELECT * FROM #tmpDataPasien) AS Source
         ON (Target.NKP = Source.NKP)
         WHEN MATCHED THEN
             UPDATE SET Target.NKP = Source.NKP,
@@ -190,9 +185,8 @@ export default async function handler(req, res) {
               ,Source.IDSponsorLtPack
               ,Source.PinBB
               ,Source.StatusDiskonPasien
-              ,Source.TglAuto)
-        OUTPUT $action, Inserted.*, Deleted.*;`);
-        firebase
+              ,Source.TglAuto);`);
+        await firebase
           .database()
           .ref("/datapasien")
           .update({

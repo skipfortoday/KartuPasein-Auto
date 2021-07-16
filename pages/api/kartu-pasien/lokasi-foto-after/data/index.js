@@ -7,15 +7,12 @@ export default async function handler(req, res) {
   try {
     if (req.method === "POST") {
       try {
-        console.log(req.body.data);
-        let q = `
-        DELETE FROM tmpPerawatanLokasiFotoAfter;
-        INSERT INTO tmpPerawatanLokasiFotoAfter
-        ("NoAuto", "NoAutoPerawatan", "Keterangan", "UserEntry", "LoginComp", "CompName", "TglActivitas", "JamActivitas", "LokasiFotoAfter", "TglAuto") VALUES ${req.body.data};`;
-        await qryKartuPasien.execute(q);
-        await qryKartuPasien.execute(
-          ` MERGE tblPerawatanLokasiFotoAfter AS Target
-                  USING (SELECT * FROM tmpPerawatanLokasiFotoAfter) AS Source
+        await qryKartuPasien.execute(` 
+          SELECT Top 0 * INTO "#tmpPerawatanLokasiFotoAfter" FROM "tblPerawatanLokasiFotoAfter";
+          INSERT INTO "#tmpPerawatanLokasiFotoAfter"
+          ("NoAuto", "NoAutoPerawatan", "Keterangan", "UserEntry", "LoginComp", "CompName", "TglActivitas", "JamActivitas", "LokasiFotoAfter", "TglAuto") VALUES ${req.body.data};
+          MERGE tblPerawatanLokasiFotoAfter AS Target
+                  USING (SELECT * FROM #tmpPerawatanLokasiFotoAfter) AS Source
                   ON (Target.NoAuto = Source.NoAuto)
                   WHEN MATCHED THEN
                       UPDATE SET
@@ -32,14 +29,12 @@ export default async function handler(req, res) {
                   WHEN NOT MATCHED BY TARGET THEN
                        INSERT
                        ("NoAuto", "NoAutoPerawatan", "Keterangan", "UserEntry", "LoginComp", "CompName", "TglActivitas", "JamActivitas", "LokasiFotoAfter", "TglAuto")
-                        VALUES  (Source.NoAuto, Source.NoAutoPerawatan, Source.Keterangan, Source.UserEntry, Source.LoginComp, Source.CompName, Source.TglActivitas, Source.JamActivitas, Source.LokasiFotoAfter, Source.TglAuto)
-                  OUTPUT $action, Inserted.*, Deleted.*;`
-        );
-        firebase
+                        VALUES  (Source.NoAuto, Source.NoAutoPerawatan, Source.Keterangan, Source.UserEntry, Source.LoginComp, Source.CompName, Source.TglActivitas, Source.JamActivitas, Source.LokasiFotoAfter, Source.TglAuto);`);
+        await firebase
           .database()
           .ref("/datapasien")
           .update({
-            sb2: moment.parseZone(moment()).format("YYYY-MM-DD HH:mm:ss"),
+            sb2: moment().format("YYYY-MM-DD HH:mm:ss"),
           });
 
         await res.status(200).json({

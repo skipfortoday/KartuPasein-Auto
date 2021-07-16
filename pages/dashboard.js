@@ -1,8 +1,13 @@
 import React, { useEffect } from "react";
-import Admin from "../src/layouts/admin";
+import BottomNav from "../src/layouts/bottomNav";
+import CommingSoon from "../src/components/commingsoon";
 
 const Dashboard = () => {
-  return <></>;
+  return (
+    <>
+      <CommingSoon />
+    </>
+  );
 };
-Dashboard.layout = Admin;
+Dashboard.layout = BottomNav;
 export default Dashboard;

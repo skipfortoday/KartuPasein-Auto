@@ -6,13 +6,11 @@ export default async function handler(req, res) {
   try {
     if (req.method === "POST") {
       try {
-        await qryKartuPasien.execute(
-          `DELETE FROM "dbo"."tmpPerawatanLokasiFotoBefore";
-          INSERT INTO "tmpPerawatanLokasiFotoBefore" ("NoAuto", "NoAutoPerawatan", "Keterangan", "UserEntry" ,"LoginComp","CompName","TglActivitas","JamActivitas","LokasiFotoBefore","TglAuto") VALUES ${req.body.data};`
-        );
-        let mergedata = await qryKartuPasien.execute(`
+        await qryKartuPasien.execute(`
+        SELECT Top 0 * INTO "#tmpPerawatanLokasiFotoBefore" FROM "tblPerawatanLokasiFotoBefore";
+        INSERT INTO "#tmpPerawatanLokasiFotoBefore" ("NoAuto", "NoAutoPerawatan", "Keterangan", "UserEntry" ,"LoginComp","CompName","TglActivitas","JamActivitas","LokasiFotoBefore","TglAuto") VALUES ${req.body.data};
         MERGE tblPerawatanLokasiFotoBefore AS Target
-        USING (SELECT * FROM tmpPerawatanLokasiFotoBefore) AS Source
+        USING (SELECT * FROM #tmpPerawatanLokasiFotoBefore) AS Source
         ON (Target.NoAuto = Source.NoAuto)
         WHEN MATCHED THEN
             UPDATE SET Target.NoAutoPerawatan = Source.NoAutoPerawatan,
@@ -35,7 +33,7 @@ export default async function handler(req, res) {
           .database()
           .ref("/datapasien")
           .update({
-            sb2: moment.parseZone(moment()).format("YYYY-MM-DD HH:mm:ss"),
+            sb2: moment().format("YYYY-MM-DD HH:mm:ss"),
           });
         res.status(200).json({
           success: true,
