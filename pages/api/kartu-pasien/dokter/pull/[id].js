@@ -6,17 +6,17 @@ export default async function handler(req, res) {
   try {
     if (req.method === "GET") {
       const checkData = await qryKartuPasien.query(`
-      SELECT TOP 100 *FROM tblBA WHERE flagPull NOT Like '%${req.query.id}%' ;
+      SELECT TOP 100 *FROM tblDokter WHERE flagPull NOT Like '%${req.query.id}%' ;
       `);
       if (checkData[0]) {
         let dataArray = "";
         checkData.forEach((items) => {
           dataArray += `(
-                        '${items.IDBA}',
+                        '${items.IDDokter}',
                         ${
-                          items.NamaBA == null
+                          items.NamaDokter == null
                             ? null
-                            : `'${items.NamaBA.replace("'", "''")}'`
+                            : `'${items.NamaDokter.replace("'", "''")}'`
                         },
                         ${items.Status == null ? null : `'${items.Status}'`},
                         ${
@@ -47,14 +47,14 @@ export default async function handler(req, res) {
       }
     } else if (req.method === "POST") {
       await qryKartuPasien.execute(`
-        SELECT Top 0 * INTO "#tmpBA" FROM "tblBA";
-        INSERT INTO "#tmpBA"
-                    ("IDBA", "NamaBA", "Status", "Exported" , "TglAuto" ) VALUES ${req.body.data};
-        MERGE tblBA AS Target
-        USING (SELECT * FROM #tmpBA) AS Source
-            ON (Target.IDBA = Source.IDBA)
+        SELECT Top 0 * INTO "#tmpDokter" FROM "tblDokter";
+        INSERT INTO "#tmpDokter"
+                    ("IDDokter", "NamaDokter", "Status", "Exported" , "TglAuto" ) VALUES ${req.body.data};
+        MERGE tblDokter AS Target
+        USING (SELECT * FROM #tmpDokter) AS Source
+            ON (Target.IDDokter = Source.IDDokter)
             WHEN MATCHED THEN
-                 UPDATE SET Target.NamaBA = Source.NamaBA, 
+                 UPDATE SET Target.NamaDokter = Source.NamaDokter, 
                            Target.Status = Source.Status,
                            Target.Exported = Source.Exported, 
                            Target.TglAuto = Source.TglAuto,
@@ -80,6 +80,6 @@ export default async function handler(req, res) {
     }
   } catch (error) {
     console.log(error);
-    res.json("Eror Pull BA ", error);
+    res.json("Eror Pull Dokter ", error);
   }
 }
