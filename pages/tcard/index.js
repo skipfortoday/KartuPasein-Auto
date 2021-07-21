@@ -1,10 +1,10 @@
 import React from "react";
-import CommingSoon from "../../src/components/commingsoon";
+import UnderConstruct from "../../src/components/underConstruct";
 import Admin from "../../src/layouts/admin";
 export default function Tcard() {
   return (
     <>
-      <CommingSoon />
+      <UnderConstruct />
     </>
   );
 }
