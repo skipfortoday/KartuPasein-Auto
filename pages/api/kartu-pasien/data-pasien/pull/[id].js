@@ -284,7 +284,7 @@ export default async function handler(req, res) {
       });
     }
   } catch (error) {
-    console.log(error);
-    res.json("Eror Pull Data Pasien ", error);
+    console.log("Eror Pull DataPasien ", error);
+    res.json("Eror Pull DataPasien ", error);
   }
 }

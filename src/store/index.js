@@ -10,4 +10,4 @@ const makeStore = () => {
   return createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
 };
 
-export default createWrapper(makeStore, { debug: true });
+export default createWrapper(makeStore, { debug: false });

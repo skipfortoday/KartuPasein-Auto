@@ -79,7 +79,7 @@ export default async function handler(req, res) {
       });
     }
   } catch (error) {
-    console.log(error);
+    console.log("Eror Pull BA", error);
     res.json("Eror Pull BA ", error);
   }
 }

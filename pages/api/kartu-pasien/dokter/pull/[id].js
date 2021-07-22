@@ -79,7 +79,7 @@ export default async function handler(req, res) {
       });
     }
   } catch (error) {
-    console.log(error);
+    console.log("Eror Pull Dokter ", error);
     res.json("Eror Pull Dokter ", error);
   }
 }

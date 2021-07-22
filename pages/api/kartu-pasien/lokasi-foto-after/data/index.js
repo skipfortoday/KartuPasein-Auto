@@ -22,7 +22,7 @@ export default async function handler(req, res) {
       });
     }
   } catch (error) {
-    console.log(error);
-    res.status(500).json("Eror Sycron Lokasi Foto After ", error);
+    console.log("Eror Data Lokasi Foto After ", error);
+    res.status(500).json("Eror Data Lokasi Foto After ", error);
   }
 }

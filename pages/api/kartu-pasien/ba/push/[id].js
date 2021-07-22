@@ -42,7 +42,7 @@ export default async function handler(req, res) {
       });
     }
   } catch (error) {
-    console.log(error);
-    res.json("Eror Sycron Beauty Assistant ", error);
+    console.log(" Erorr Push BA ", error);
+    res.json("Erorr Push BA ", error);
   }
 }

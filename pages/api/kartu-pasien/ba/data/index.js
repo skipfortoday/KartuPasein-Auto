@@ -9,7 +9,7 @@ export default async function handler(req, res) {
       );
       res.status(200).json({
         success: true,
-        message: "Berhasil Mendapatkan Data",
+        message: "Berhasil Mendapatkan Data BA",
         data: querydata,
       });
     } else {
@@ -20,7 +20,7 @@ export default async function handler(req, res) {
       });
     }
   } catch (error) {
-    console.log(error);
-    res.json("Eror Sycron dokter ", error);
+    console.log("Error BA Data", error);
+    res.json("Eror Sycron Ba ", error);
   }
 }

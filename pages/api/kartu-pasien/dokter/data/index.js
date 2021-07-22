@@ -28,7 +28,7 @@ export default async function handler(req, res) {
       });
     }
   } catch (error) {
-    console.log(error);
-    res.json("Eror Sycron dokter ", error);
+    console.log("Eror dokter data", error);
+    res.json("Eror dokter data", error);
   }
 }
