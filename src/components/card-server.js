@@ -1,14 +1,15 @@
 import React from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
+import {
+  IconButton,
+  Typography,
+  CardMedia,
+  CardContent,
+  Card,
+} from "@material-ui/core/";
 import CloudDoneRoundedIcon from "@material-ui/icons/CloudDoneRounded";
 import CloudOffRoundedIcon from "@material-ui/icons/CloudOffRounded";
 import { green, red } from "@material-ui/core/colors";
-import { Grid, Paper } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,69 +47,46 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CardServer() {
+export default function CardServer(props) {
   const classes = useStyles();
-  const theme = useTheme();
-
   return (
     <>
-      <Grid container spacing={3}>
-        <Grid item xs={4}>
-          <Card className={classes.root}>
-            <div className={classes.details}>
-              <CardContent className={classes.content}>
-                <Typography component="h5" variant="h5">
-                  Jakarta 1
-                </Typography>
-                <Typography variant="caption" color="textSecondary">
-                  Jakarta PIK
-                </Typography>
-              </CardContent>
-              <div className={classes.controls}>
-                <IconButton aria-label="coloud">
-                  <CloudDoneRoundedIcon className={classes.playIcon} />
-                </IconButton>
-                <Typography variant="subtitle2" gutterBottom>
-                  Online
-                </Typography>
-              </div>
+      <Card className={classes.root}>
+        <div className={classes.details}>
+          <CardContent className={classes.content}>
+            <Typography component="h5" variant="h5">
+              {props.Nama}
+            </Typography>
+            <Typography variant="caption" color="textSecondary">
+              {props.Lokasi}
+            </Typography>
+          </CardContent>
+          {props.Status == "Online" ? (
+            <div className={classes.controls}>
+              <IconButton aria-label="coloud">
+                <CloudDoneRoundedIcon className={classes.playIcon} />
+              </IconButton>
+              <Typography variant="subtitle2" gutterBottom>
+                Online
+              </Typography>
             </div>
-            <CardMedia
-              className={classes.cover}
-              image="/ServerUP.svg"
-              title="Live from space album cover"
-            />
-          </Card>
-        </Grid>
-        <Grid item xs={4}>
-          <Card className={classes.root}>
-            <div className={classes.details}>
-              <CardContent className={classes.content}>
-                <Typography component="h5" variant="h5">
-                  Jakarta 2
-                </Typography>
-                <Typography variant="caption" color="textSecondary">
-                  Jakarta Selatan
-                </Typography>
-              </CardContent>
-              <div className={classes.controls}>
-                <IconButton aria-label="play/pause">
-                  <CloudOffRoundedIcon className={classes.playIcon2} />
-                </IconButton>
-                <Typography variant="subtitle2" gutterBottom>
-                  Offline
-                </Typography>
-              </div>
+          ) : (
+            <div className={classes.controls}>
+              <IconButton aria-label="coloud">
+                <CloudOffRoundedIcon className={classes.playIcon2} />
+              </IconButton>
+              <Typography variant="subtitle2" gutterBottom>
+                Offline
+              </Typography>
             </div>
-            <CardMedia
-              className={classes.cover}
-              image="/ServerDown.svg"
-              title="Live from space album cover"
-            />
-          </Card>
-        </Grid>
-        <Grid item xs={4}></Grid>
-      </Grid>
+          )}
+        </div>
+        <CardMedia
+          className={classes.cover}
+          image="/ServerUP.svg"
+          title="Live from space album cover"
+        />
+      </Card>
     </>
   );
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import MUIDataTable from "mui-datatables";
 import Skeleton from "@material-ui/lab/Skeleton";
+import CustomToolbarSelect from "./customToolbarSelect";
 
 const TablefixHeader = (props) => {
   const options = {
@@ -10,6 +11,9 @@ const TablefixHeader = (props) => {
     fixedHeader: true,
     fixedSelectColumn: true,
     tableBodyHeight: "400px",
+    customToolbarSelect: (selectedRows) => (
+      <CustomToolbarSelect selectedRows={selectedRows} />
+    ),
   };
   const data = props.data ? props.data : [];
   return props.data ? (

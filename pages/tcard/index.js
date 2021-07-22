@@ -1,6 +1,6 @@
 import React from "react";
 import UnderConstruct from "../../src/components/underConstruct";
-import Admin from "../../src/layouts/admin";
+import BottomNav from "../../src/layouts/bottomNav";
 export default function Tcard() {
   return (
     <>
@@ -9,4 +9,4 @@ export default function Tcard() {
   );
 }
 
-Tcard.layout = Admin;
+Tcard.layout = BottomNav;

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Admin from "../../src/layouts/admin";
+import BottomNav from "../../src/layouts/bottomNav";
 import TablefixHeader from "../../src/components/tablefixHeader";
 import { getDataPasien } from "../../src/actions/kartu-pasien-action";
 import { connect } from "react-redux";
@@ -18,19 +18,13 @@ const columns = [
     },
   },
   {
-    name: "Nama",
+    name: "Flag",
     options: {
       filter: false,
     },
   },
   {
-    name: "Alamat",
-    options: {
-      filter: false,
-    },
-  },
-  {
-    name: "TglAuto",
+    name: "Waktu",
     options: {
       filter: false,
     },
@@ -54,5 +48,5 @@ const dataPasien = (props) => {
   );
 };
 
-dataPasien.layout = Admin;
+dataPasien.layout = BottomNav;
 export default connect(mapStateToProps, null)(dataPasien);

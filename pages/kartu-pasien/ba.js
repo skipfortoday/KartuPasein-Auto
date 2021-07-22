@@ -20,19 +20,13 @@ const columns = [
     },
   },
   {
-    name: "NamaBA",
+    name: "Flag",
     options: {
       filter: false,
     },
   },
   {
-    name: "Status",
-    options: {
-      filter: false,
-    },
-  },
-  {
-    name: "WaktuSyc",
+    name: "Waktu",
     options: {
       filter: false,
     },

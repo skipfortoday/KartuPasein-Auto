@@ -68,7 +68,7 @@ export default async function handler(req, res) {
         });
       res.status(200).json({
         success: true,
-        message: "Berhasil Post Flag Pull",
+        message: "Berhasil Post Flag Pull BA",
         data: req.body.data,
       });
     } else {

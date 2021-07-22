@@ -4,7 +4,7 @@ export default async function handler(req, res) {
   try {
     if (req.method === "GET") {
       let querydata = await qryKartuPasien.query(
-        `SELECT IDBA, NamaBA , Status, CONVERT(varchar, TglAuto,113) as WaktuSyc
+        `SELECT IDBA, flagPull as Flag, CONVERT(varchar, TglAuto,113) as Waktu
         FROM tblBA ORDER BY TglAuto DESC`
       );
       res.status(200).json({

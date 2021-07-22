@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Admin from "../../src/layouts/admin";
+import BottomNav from "../../src/layouts/bottomNav";
 import TablefixHeader from "../../src/components/tablefixHeader";
 import { getLokasiFotoBefore } from "../../src/actions/kartu-pasien-action";
 import { connect } from "react-redux";
@@ -18,13 +18,13 @@ const columns = [
     },
   },
   {
-    name: "LokasiFotoBefore",
+    name: "Flag",
     options: {
       filter: false,
     },
   },
   {
-    name: "TglAuto",
+    name: "Waktu",
     options: {
       filter: false,
     },
@@ -48,5 +48,5 @@ const LokasiFotoBefore = (props) => {
   );
 };
 
-LokasiFotoBefore.layout = Admin;
+LokasiFotoBefore.layout = BottomNav;
 export default connect(mapStateToProps, null)(LokasiFotoBefore);

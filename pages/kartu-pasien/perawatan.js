@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Admin from "../../src/layouts/admin";
+import BottomNav from "../../src/layouts/bottomNav";
 import TablefixHeader from "../../src/components/tablefixHeader";
 import { getPerawatan } from "../../src/actions/kartu-pasien-action";
 import { connect } from "react-redux";
@@ -18,7 +18,13 @@ const columns = [
     },
   },
   {
-    name: "TglAuto",
+    name: "Flag",
+    options: {
+      filter: false,
+    },
+  },
+  {
+    name: "Waktu",
     options: {
       filter: false,
     },
@@ -42,5 +48,5 @@ const Perawatan = (props) => {
   );
 };
 
-Perawatan.layout = Admin;
+Perawatan.layout = BottomNav;
 export default connect(mapStateToProps, null)(Perawatan);

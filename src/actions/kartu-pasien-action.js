@@ -7,6 +7,7 @@ import {
   GET_KARTUPASIEN_LOKASIFOTOBEFORE,
   GET_KARTUPASIEN_LOKASIFOTOAFTER,
 } from "../constants";
+import conf from "../config";
 
 export const getDataPasien = () => {
   return (dispatch) => {
@@ -35,6 +36,7 @@ export const getDataPasien = () => {
 
 export const getBA = () => {
   return (dispatch) => {
+    console.log(conf.baseURL);
     axios
       .get(`http://localhost:3000/api/kartu-pasien/ba/data`)
       .then(function (response) {
@@ -48,7 +50,7 @@ export const getBA = () => {
       })
       .catch(function (error) {
         dispatch({
-          type: GET_KARTUPASIEN_DATAPASIEN,
+          type: GET_KARTUPASIEN_BA,
           payload: {
             data: false,
             errorMessage: error,
@@ -61,7 +63,7 @@ export const getBA = () => {
 export const getDokter = () => {
   return (dispatch) => {
     axios
-      .get(`http://localhost:3000/api/kartu-pasien/dokter/data`)
+      .get(`${conf.baseUrl}/kartu-pasien/dokter/data`)
       .then(function (response) {
         dispatch({
           type: GET_KARTUPASIEN_DOKTER,
