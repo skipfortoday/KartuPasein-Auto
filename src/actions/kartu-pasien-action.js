@@ -63,7 +63,7 @@ export const getBA = () => {
 export const getDokter = () => {
   return (dispatch) => {
     axios
-      .get(`${conf.baseUrl}/kartu-pasien/dokter/data`)
+      .get(`http://localhost:3000/api/kartu-pasien/dokter/data`)
       .then(function (response) {
         dispatch({
           type: GET_KARTUPASIEN_DOKTER,

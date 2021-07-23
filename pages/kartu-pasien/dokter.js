@@ -38,7 +38,7 @@ const Dokter = (props) => {
       props.dispatch(getDokter());
       firebase
         .database()
-        .ref("/datapasien")
+        .ref("/kartu-pasien/tblDokter")
         .on("value", (snapshot) => {
           const data = snapshot.val();
           console.log(data);

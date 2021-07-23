@@ -3,6 +3,7 @@ import BottomNav from "../../src/layouts/bottomNav";
 import TablefixHeader from "../../src/components/tablefixHeader";
 import { getPerawatan } from "../../src/actions/kartu-pasien-action";
 import { connect } from "react-redux";
+import firebase from "../../src/config/firebase";
 
 const mapStateToProps = (state) => {
   return {
@@ -35,6 +36,14 @@ const Perawatan = (props) => {
   useEffect(() => {
     if (!props.getPerawatan) {
       props.dispatch(getPerawatan());
+      firebase
+        .database()
+        .ref("/kartu-pasien/tblPerawatan")
+        .on("value", (snapshot) => {
+          const data = snapshot.val();
+          console.log(data);
+          props.dispatch(getPerawatan());
+        });
     }
   });
   return (

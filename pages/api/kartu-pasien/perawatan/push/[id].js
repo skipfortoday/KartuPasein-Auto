@@ -146,11 +146,11 @@ export default async function handler(req, res) {
                       ,Source.TglAuto
                       ,'${req.query.id}');
       `);
-      firebase
+      await firebase
         .database()
-        .ref("/datapasien")
+        .ref("/kartu-pasien")
         .update({
-          sb2: moment().format("YYYY-MM-DD HH:mm:ss"),
+          tblPerawatan: moment().format("YYYY-MM-DD HH:mm:ss"),
         });
       res.status(200).json({
         success: true,

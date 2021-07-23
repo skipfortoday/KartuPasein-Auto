@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Admin from "../../src/layouts/admin";
 import TablefixHeader from "../../src/components/tablefixHeader";
 import { getBA } from "../../src/actions/kartu-pasien-action";
 import firebase from "../../src/config/firebase";
@@ -39,7 +38,7 @@ const ba = (props) => {
       props.dispatch(getBA());
       firebase
         .database()
-        .ref("/datapasien")
+        .ref("/kartu-pasien/tblBA")
         .on("value", (snapshot) => {
           const data = snapshot.val();
           console.log(data);

@@ -188,12 +188,14 @@ export default async function handler(req, res) {
               ,Source.StatusDiskonPasien
               ,Source.TglAuto
               ,'${req.query.id}');`);
+
       await firebase
         .database()
-        .ref("/datapasien")
+        .ref("/kartu-pasien")
         .update({
-          sb2: moment.parseZone(moment()).format("YYYY-MM-DD HH:mm:ss"),
+          tblDataPasien: moment().format("YYYY-MM-DD HH:mm:ss"),
         });
+
       res.status(200).json({
         success: true,
         message: "Berhasil Post Data",

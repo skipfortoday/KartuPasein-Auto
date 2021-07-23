@@ -3,6 +3,7 @@ import BottomNav from "../../src/layouts/bottomNav";
 import TablefixHeader from "../../src/components/tablefixHeader";
 import { getLokasiFotoBefore } from "../../src/actions/kartu-pasien-action";
 import { connect } from "react-redux";
+import firebase from "../../src/config/firebase";
 
 const mapStateToProps = (state) => {
   return {
@@ -35,6 +36,14 @@ const LokasiFotoBefore = (props) => {
   useEffect(() => {
     if (!props.getLokasiFotoBefore) {
       props.dispatch(getLokasiFotoBefore());
+      firebase
+        .database()
+        .ref("/kartu-pasien/tblPerawatanLokasiFotoBefore")
+        .on("value", (snapshot) => {
+          const data = snapshot.val();
+          console.log(data);
+          props.dispatch(getLokasiFotoBefore());
+        });
     }
   });
   return (

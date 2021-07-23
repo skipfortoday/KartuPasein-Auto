@@ -31,9 +31,9 @@ export default async function handler(req, res) {
                         VALUES  (Source.NoAuto, Source.NoAutoPerawatan, Source.Keterangan, Source.UserEntry, Source.LoginComp, Source.CompName, Source.TglActivitas, Source.JamActivitas, Source.LokasiFotoAfter, Source.TglAuto,'${req.query.id}');`);
       await firebase
         .database()
-        .ref("/datapasien")
+        .ref("/kartu-pasien")
         .update({
-          sb2: moment().format("YYYY-MM-DD HH:mm:ss"),
+          tblPerawatanLokasiFotoAfter: moment().format("YYYY-MM-DD HH:mm:ss"),
         });
 
       await res.status(200).json({
