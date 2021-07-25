@@ -1,16 +1,23 @@
-const express = require("express");
+const app = require("express")();
 const next = require("next");
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== "production";
-const app = next({ dev });
-const handle = app.getRequestHandler();
+const nextApp = next({ dev });
+const nextHandle = nextApp.getRequestHandler();
 
-app.prepare().then(() => {
-  const server = express();
+nextApp.prepare().then(() => {
+  const server = require("http").Server(app);
+  const io = require("socket.io")(server);
 
-  server.all("*", (req, res) => {
-    return handle(req, res);
+  io.on("connect", (socket) => {
+    socket.emit("now", {
+      message: "zeit",
+    });
+  });
+
+  app.get("*", (req, res) => {
+    return nextHandle(req, res);
   });
 
   server.listen(port, (err) => {
