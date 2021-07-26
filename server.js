@@ -9,10 +9,18 @@ const nextHandle = nextApp.getRequestHandler();
 nextApp.prepare().then(() => {
   const server = require("http").Server(app);
   const io = require("socket.io")(server);
-
+  let listIP = [];
   io.on("connect", (socket) => {
-    socket.emit("now", {
-      message: "zeit",
+    const ip =
+      socket.handshake.headers["x-forwarded-for"] ||
+      socket.conn.remoteAddress.split(":")[3];
+
+    ip ? listIP.push(ip) : console.log("Belum connect");
+    console.log(listIP);
+
+    io.emit("some event", {
+      connect: "true",
+      list: listIP,
     });
   });
 
