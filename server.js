@@ -18,7 +18,6 @@ bot.on("message", (msg) => {
   const chatId = msg.chat.id;
   console.log(chatId);
   // send a message to the chat acknowledging receipt of their message
-  bot.sendMessage(chatId, "Received your message");
 });
 
 nextApp.prepare().then(() => {
@@ -34,7 +33,7 @@ nextApp.prepare().then(() => {
 
     ip ? listIP.push(ip) : console.log("Belum connect");
     console.log(listIP);
-
+    bot.sendMessage("@lvnotify", `${ip} Telah Connect`);
     io.emit("some event", {
       connect: "true",
       list: listIP,
@@ -45,6 +44,7 @@ nextApp.prepare().then(() => {
 
       ip ? listIP.pop(ip) : console.log("Belum connect");
       console.log(listIP);
+      bot.sendMessage("@lvnotify", `${ip} Telah Disconnect`);
 
       io.emit("some event", {
         connect: "true",
