@@ -30,6 +30,11 @@ nextApp.prepare().then(() => {
 
       ip ? listIP.pop(ip) : console.log("Belum connect");
       console.log(listIP);
+
+      io.emit("some event", {
+        connect: "true",
+        list: listIP,
+      });
     });
   });
 

@@ -32,7 +32,7 @@ const StatusServer = () => {
           <CardServer
             Nama="Jakarta 1"
             Lokasi="JK1-PIK"
-            Status={cariParam("127.0.0.1")}
+            Status={cariParam("192.168.0.27")}
           />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
