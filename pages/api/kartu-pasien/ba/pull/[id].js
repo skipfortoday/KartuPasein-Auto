@@ -71,6 +71,45 @@ export default async function handler(req, res) {
         message: "Berhasil Post Flag Pull BA",
         data: req.body.data,
       });
+    } else if (req.method === "PATCH") {
+      const checkData = await qryKartuPasien.query(`
+      SELECT TOP 1 IDBA FROM logBA WHERE flagPull NOT Like '%${req.query.id}%' ;
+      `);
+      if (checkData[0]) {
+        let key = checkData[0].IDBA;
+        res.status(200).json({
+          success: true,
+          message: "Berhasil Mendapatkan Data Pull",
+          data: key,
+        });
+      } else {
+        res.status(200).json({
+          success: false,
+          status: 204,
+          message: "Belum ada data untuk Pull",
+          data: false,
+        });
+      }
+    } else if (req.method === "PUT") {
+      await qryKartuPasien.execute(`
+        SELECT Top 1 * INTO "#tmpBA" FROM "logBA" WHERE IDBA='${req.body.data}' ;
+        MERGE logBA AS Target
+        USING (SELECT * FROM #tmpBA) AS Source
+            ON (Target.IDBA = Source.IDBA)
+            WHEN MATCHED THEN
+                 UPDATE SET Target.flagPull = Target.flagPull + '-' + '${req.query.id}' ;
+      `);
+      await firebase
+        .database()
+        .ref("/datapasien")
+        .update({
+          sb2: moment().format("YYYY-MM-DD HH:mm:ss"),
+        });
+      res.status(200).json({
+        success: true,
+        message: "Berhasil PUT Flag Pull BA",
+        data: req.body.data,
+      });
     } else {
       res.status(404).json({
         success: false,
