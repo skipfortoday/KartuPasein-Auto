@@ -1,10 +1,25 @@
 const app = require("express")();
 const next = require("next");
-
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== "production";
 const nextApp = next({ dev });
 const nextHandle = nextApp.getRequestHandler();
+process.env.NTBA_FIX_319 = 1;
+
+const TelegramBot = require("node-telegram-bot-api");
+
+// replace the value below with the Telegram token you receive from @BotFather
+const token = "1826120694:AAHgzuV5PM_gCxQ6jNJTjMZW4Mi6rDEKW2k";
+
+// Create a bot that uses 'polling' to fetch new updates
+const bot = new TelegramBot(token, { polling: true });
+
+bot.on("message", (msg) => {
+  const chatId = msg.chat.id;
+  console.log(chatId);
+  // send a message to the chat acknowledging receipt of their message
+  bot.sendMessage(chatId, "Received your message");
+});
 
 nextApp.prepare().then(() => {
   const server = require("http").Server(app);
