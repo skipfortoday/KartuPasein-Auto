@@ -42,7 +42,7 @@ export default async function handler(req, res) {
           ON (Target.IDBA = Source.IDBA)
           WHEN MATCHED THEN
                UPDATE SET Target.NamaBA = Source.NamaBA, 
-                         Target.Status = Source.Status,
+                          Target.Status = Source.Status,
                          Target.Exported = Source.Exported, 
                          Target.TglAuto = Source.TglAuto,
                          Target.flagPull = '${req.query.id}'

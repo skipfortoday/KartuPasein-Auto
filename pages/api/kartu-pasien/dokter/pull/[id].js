@@ -62,13 +62,52 @@ export default async function handler(req, res) {
       `);
       await firebase
         .database()
-        .ref("/datapasien")
+        .ref("/kartu-pasien")
         .update({
-          sb2: moment().format("YYYY-MM-DD HH:mm:ss"),
+          tblDokter: moment().format("YYYY-MM-DD HH:mm:ss"),
         });
       res.status(200).json({
         success: true,
         message: "Berhasil Post Flag Pull",
+        data: req.body.data,
+      });
+    } else if (req.method === "PATCH") {
+      const checkData = await qryKartuPasien.query(`
+      SELECT TOP 1 IDDokter FROM logDokter WHERE flagPull NOT Like '%${req.query.id}%' ;
+      `);
+      if (checkData[0]) {
+        let key = checkData[0].IDDokter;
+        res.status(200).json({
+          success: true,
+          message: "Berhasil Mendapatkan Data Pull",
+          data: key,
+        });
+      } else {
+        res.status(200).json({
+          success: false,
+          status: 204,
+          message: "Belum ada data untuk Pull",
+          data: false,
+        });
+      }
+    } else if (req.method === "PUT") {
+      await qryKartuPasien.execute(`
+        SELECT Top 1 * INTO "#tmpDokter" FROM "logBA" WHERE IDDokter='${req.body.data}' ;
+        MERGE logDokter AS Target
+        USING (SELECT * FROM #tmpDokter) AS Source
+            ON (Target.IDDokter = Source.IDDokter)
+            WHEN MATCHED THEN
+                 UPDATE SET Target.flagPull = Target.flagPull + '-' + '${req.query.id}' ;
+      `);
+      await firebase
+        .database()
+        .ref("/kartu-pasien")
+        .update({
+          tblDokter: moment().format("YYYY-MM-DD HH:mm:ss"),
+        });
+      res.status(200).json({
+        success: true,
+        message: "Berhasil PUT Flag Pull Dokter",
         data: req.body.data,
       });
     } else {

@@ -15,9 +15,11 @@ const token = "1826120694:AAHgzuV5PM_gCxQ6jNJTjMZW4Mi6rDEKW2k";
 const bot = new TelegramBot(token, { polling: true });
 
 bot.on("message", (msg) => {
+  console.log(msg);
   const chatId = msg.chat.id;
   console.log(chatId);
-  // send a message to the chat acknowledging receipt of their message
+  bot.sendMessage(chatId, `test`);
+  bot.sendMessage("-532926021", `ini dari ID`);
 });
 
 nextApp.prepare().then(() => {
@@ -33,7 +35,10 @@ nextApp.prepare().then(() => {
 
     ip ? listIP.push(ip) : console.log("Belum connect");
     console.log(listIP);
-    bot.sendMessage("@lvnotify", `${ip} Telah Connect`);
+    if (ip == "127.0.0.1") {
+      bot.sendMessage("@lvnotify", `Server => ${ip} Telah Connect`);
+    }
+
     io.emit("some event", {
       connect: "true",
       list: listIP,
@@ -44,7 +49,9 @@ nextApp.prepare().then(() => {
 
       ip ? listIP.pop(ip) : console.log("Belum connect");
       console.log(listIP);
-      bot.sendMessage("@lvnotify", `${ip} Telah Disconnect`);
+      if (ip == "127.0.0.1") {
+        bot.sendMessage("@lvnotify", `Server => ${ip} Telah Disconnect`);
+      }
 
       io.emit("some event", {
         connect: "true",

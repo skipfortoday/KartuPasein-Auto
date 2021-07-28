@@ -62,9 +62,9 @@ export default async function handler(req, res) {
       `);
       await firebase
         .database()
-        .ref("/datapasien")
+        .ref("/kartu-pasien")
         .update({
-          sb2: moment().format("YYYY-MM-DD HH:mm:ss"),
+          tblBA: moment().format("YYYY-MM-DD HH:mm:ss"),
         });
       res.status(200).json({
         success: true,
@@ -101,9 +101,9 @@ export default async function handler(req, res) {
       `);
       await firebase
         .database()
-        .ref("/datapasien")
+        .ref("/kartu-pasien")
         .update({
-          sb2: moment().format("YYYY-MM-DD HH:mm:ss"),
+          tblBA: moment().format("YYYY-MM-DD HH:mm:ss"),
         });
       res.status(200).json({
         success: true,
