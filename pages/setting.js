@@ -5,7 +5,8 @@ import UnderConstruct from "../src/components/underConstruct";
 const Setting = () => {
   return (
     <>
-      <UnderConstruct />
+
+        <UnderConstruct />
     </>
   );
 };
