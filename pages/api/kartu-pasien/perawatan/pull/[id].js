@@ -248,7 +248,7 @@ export default async function handler(req, res) {
       });
     } else if (req.method === "PATCH") {
       const checkData = await qryKartuPasien.query(`
-      SELECT TOP 1 NoAuto FROM logPerawtan WHERE flagPull NOT Like '%${req.query.id}%' ;
+      SELECT TOP 1 NoAuto FROM logPerawatan WHERE flagPull NOT Like '%${req.query.id}%' ;
       `);
       if (checkData[0]) {
         let key = checkData[0].NoAuto;

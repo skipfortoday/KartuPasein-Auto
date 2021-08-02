@@ -297,7 +297,7 @@ export default async function handler(req, res) {
       }
     } else if (req.method === "PUT") {
       await qryKartuPasien.execute(`
-        SELECT Top 1 * INTO "#tmpDataPasien" FROM "logBA" WHERE NKP='${req.body.data}' ;
+        SELECT Top 1 * INTO "#tmpDataPasien" FROM "logDataPasien" WHERE NKP='${req.body.data}' ;
         MERGE logDataPasien AS Target
         USING (SELECT * FROM #tmpDataPasien) AS Source
             ON (Target.NKP = Source.NKP)

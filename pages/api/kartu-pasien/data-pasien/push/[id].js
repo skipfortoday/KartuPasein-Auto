@@ -342,7 +342,7 @@ export default async function handler(req, res) {
               ,Source.TglAuto
               ,'${req.query.id}');`);
       let deleteDataPasien = await qryKartuPasien.execute(
-        `DELETE FROM tblDataPasien WHERE IDBA = '${req.body.data}'`
+        `DELETE FROM tblDataPasien WHERE NKP = '${req.body.data}'`
       );
       await firebase
         .database()

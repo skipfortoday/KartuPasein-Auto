@@ -92,7 +92,7 @@ export default async function handler(req, res) {
       }
     } else if (req.method === "PUT") {
       await qryKartuPasien.execute(`
-        SELECT Top 1 * INTO "#tmpDokter" FROM "logBA" WHERE IDDokter='${req.body.data}' ;
+        SELECT Top 1 * INTO "#tmpDokter" FROM "logDokter" WHERE IDDokter='${req.body.data}' ;
         MERGE logDokter AS Target
         USING (SELECT * FROM #tmpDokter) AS Source
             ON (Target.IDDokter = Source.IDDokter)

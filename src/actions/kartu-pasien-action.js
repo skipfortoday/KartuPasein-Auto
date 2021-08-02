@@ -12,7 +12,7 @@ import conf from "../config";
 export const getDataPasien = () => {
   return (dispatch) => {
     axios
-      .get(`http://localhost:3000/api/kartu-pasien/data-pasien/data`)
+      .get(`http://192.168.0.25:3000/api/kartu-pasien/data-pasien/data`)
       .then(function (response) {
         dispatch({
           type: GET_KARTUPASIEN_DATAPASIEN,
@@ -38,7 +38,7 @@ export const getBA = () => {
   return (dispatch) => {
     console.log(conf.baseURL);
     axios
-      .get(`http://localhost:3000/api/kartu-pasien/ba/data`)
+      .get(`http://192.168.0.25:3000/api/kartu-pasien/ba/data`)
       .then(function (response) {
         dispatch({
           type: GET_KARTUPASIEN_BA,
@@ -63,7 +63,7 @@ export const getBA = () => {
 export const getDokter = () => {
   return (dispatch) => {
     axios
-      .get(`http://localhost:3000/api/kartu-pasien/dokter/data`)
+      .get(`http://192.168.0.25:3000/api/kartu-pasien/dokter/data`)
       .then(function (response) {
         dispatch({
           type: GET_KARTUPASIEN_DOKTER,
@@ -88,7 +88,7 @@ export const getDokter = () => {
 export const getPerawatan = () => {
   return (dispatch) => {
     axios
-      .get(`http://localhost:3000/api/kartu-pasien/perawatan/data`)
+      .get(`http://192.168.0.25:3000/api/kartu-pasien/perawatan/data`)
       .then(function (response) {
         dispatch({
           type: GET_KARTUPASIEN_PERAWATAN,
@@ -113,7 +113,7 @@ export const getPerawatan = () => {
 export const getLokasiFotoBefore = () => {
   return (dispatch) => {
     axios
-      .get(`http://localhost:3000/api/kartu-pasien/lokasi-foto-before/data`)
+      .get(`http://192.168.0.25:3000/api/kartu-pasien/lokasi-foto-before/data`)
       .then(function (response) {
         dispatch({
           type: GET_KARTUPASIEN_LOKASIFOTOBEFORE,
@@ -138,7 +138,7 @@ export const getLokasiFotoBefore = () => {
 export const getLokasiFotoAfter = () => {
   return (dispatch) => {
     axios
-      .get(`http://localhost:3000/api/kartu-pasien/lokasi-foto-after/data`)
+      .get(`http://192.168.0.25:3000/api/kartu-pasien/lokasi-foto-after/data`)
       .then(function (response) {
         dispatch({
           type: GET_KARTUPASIEN_LOKASIFOTOAFTER,

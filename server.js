@@ -15,9 +15,7 @@ const token = "1826120694:AAHgzuV5PM_gCxQ6jNJTjMZW4Mi6rDEKW2k";
 const bot = new TelegramBot(token, { polling: true });
 
 bot.on("message", (msg) => {
-  console.log(msg);
   const chatId = msg.chat.id;
-  console.log(chatId);
   bot.sendMessage(chatId, `test`);
   bot.sendMessage("-532926021", `ini dari ID`);
 });
@@ -28,15 +26,25 @@ nextApp.prepare().then(() => {
   let listIP = [];
 
   io.on("connect", (socket) => {
-    console.log(socket.conn.remoteAddress);
     const ip =
       socket.handshake.headers["x-forwarded-for"] ||
       socket.conn.remoteAddress.split(":")[3];
 
     ip ? listIP.push(ip) : console.log("Belum connect");
-    console.log(listIP);
     if (ip == "127.0.0.1") {
       bot.sendMessage("@lvnotify", `Server => ${ip} Telah Connect`);
+    } else if (ip == "192.168.0.27") {
+      bot.sendMessage(
+        "@lvnotify",
+        `Server => ${ip}  
+          Mbak febri Telah Connect`
+      );
+    } else if (ip == "192.168.0.14") {
+      bot.sendMessage(
+        "@lvnotify",
+        `Server => ${ip}  
+          Mas Dimas Telah Connect`
+      );
     }
 
     io.emit("some event", {
@@ -44,13 +52,25 @@ nextApp.prepare().then(() => {
       list: listIP,
     });
 
-    socket.on("disconnect", function () {
+    socket.on("disconnect", async function () {
       console.log("Got disconnect!");
 
-      ip ? listIP.pop(ip) : console.log("Belum connect");
-      console.log(listIP);
+      (await ip) ? listIP.pop(ip) : console.log("Belum connect");
+
       if (ip == "127.0.0.1") {
         bot.sendMessage("@lvnotify", `Server => ${ip} Telah Disconnect`);
+      } else if (ip == "192.168.0.27") {
+        bot.sendMessage(
+          "@lvnotify",
+          `Server => ${ip}  
+            Mbak febri Telah DC`
+        );
+      } else if (ip == "192.168.0.14") {
+        bot.sendMessage(
+          "@lvnotify",
+          `Server => ${ip}  
+            Mas Dimas Telah DC`
+        );
       }
 
       io.emit("some event", {
