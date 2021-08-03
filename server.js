@@ -30,7 +30,9 @@ nextApp.prepare().then(() => {
       socket.handshake.headers["x-forwarded-for"] ||
       socket.conn.remoteAddress.split(":")[3];
 
-    ip ? listIP.push(ip) : console.log("Belum connect");
+    if (ip && listIP.find((element) => element == ip) == undefined) {
+      listIP.push(ip);
+    }
     if (ip == "127.0.0.1") {
       bot.sendMessage("@lvnotify", `Server => ${ip} Telah Connect`);
     } else if (ip == "192.168.0.27") {
@@ -51,11 +53,15 @@ nextApp.prepare().then(() => {
       connect: "true",
       list: listIP,
     });
-
+    console.log(listIP);
     socket.on("disconnect", async function () {
-      console.log("Got disconnect!");
-
-      (await ip) ? listIP.pop(ip) : console.log("Belum connect");
+      if (ip) {
+        for (var i = 0; i < listIP.length; i++) {
+          if (listIP[i] === ip) {
+            listIP.splice(listIP.indexOf(ip), 1);
+          }
+        }
+      }
 
       if (ip == "127.0.0.1") {
         bot.sendMessage("@lvnotify", `Server => ${ip} Telah Disconnect`);

@@ -3,20 +3,13 @@ import CardServer from "../../../src/components/card-server";
 import BottomNav from "../../../src/layouts/bottomNav";
 import { Grid } from "@material-ui/core/";
 import io from "socket.io-client";
-const socket = io("http://192.168.0.25:3000");
 import Slide from "@material-ui/core/Slide";
 
 const StatusServer = () => {
   const [isOnline, setIsOnline] = useState([]);
   const [isOnline1, setIsOnline1] = useState("Off");
   const [isOnline2, setIsOnline2] = useState("Off");
-  socket.on("connect", () => {
-    socket.on("some event", (msg) => {
-      msg.list
-        ? handleStatusChange(msg.list)
-        : console.log("Hmm Something with Socket");
-    });
-  });
+  const [render, setRender] = useState(true);
 
   function handleStatusChange(data) {
     setIsOnline(data);
@@ -37,16 +30,25 @@ const StatusServer = () => {
   }
 
   useEffect(() => {
+    if (render == true) {
+      const socket = io("http://192.168.0.25:3000");
+      socket.on("connect", () => {
+        socket.on("some event", (msg) => {
+          msg.list
+            ? handleStatusChange(msg.list)
+            : console.log("Hmm Something with Socket");
+          console.log(msg);
+        });
+        setRender(false);
+      });
+    }
     cariParam1();
     cariParam2();
-    console.log(isOnline);
-    console.log(cariParam1());
-    console.log(cariParam2());
   });
 
   return (
     <>
-      <Slide in="true" direction="right" mountOnEnter unmountOnExit>
+      <Slide in direction="right" mountOnEnter unmountOnExit>
         <Grid container spacing={1}>
           <Grid item xs={12} sm={6} md={3}>
             <CardServer Nama="Febri" Lokasi="JK1-PIK" Status={isOnline1} />
