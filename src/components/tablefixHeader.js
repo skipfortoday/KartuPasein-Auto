@@ -19,7 +19,7 @@ const TablefixHeader = (props) => {
   const data = props.data ? props.data : [];
   return props.data ? (
     <>
-      <Slide in="true" direction="right">
+      <Slide in="true" direction="up">
         <MUIDataTable
           title={props.title}
           data={data}

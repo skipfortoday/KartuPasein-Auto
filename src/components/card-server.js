@@ -51,17 +51,19 @@ export default function CardServer(props) {
   const classes = useStyles();
   return (
     <>
-      <Card className={classes.root}>
-        <div className={classes.details}>
-          <CardContent className={classes.content}>
-            <Typography component="h5" variant="h5">
-              {props.Nama}
-            </Typography>
-            <Typography variant="caption" color="textSecondary">
-              {props.Lokasi}
-            </Typography>
-          </CardContent>
-          {props.Status == "Online" ? (
+      {" "}
+      {props.Status == "Online" ? (
+        <Card className={classes.root}>
+          <div className={classes.details}>
+            <CardContent className={classes.content}>
+              <Typography component="h5" variant="h5">
+                {props.Nama}
+              </Typography>
+              <Typography variant="caption" color="textSecondary">
+                {props.Lokasi}
+              </Typography>
+            </CardContent>
+
             <div className={classes.controls}>
               <IconButton aria-label="coloud">
                 <CloudDoneRoundedIcon className={classes.playIcon} />
@@ -70,7 +72,25 @@ export default function CardServer(props) {
                 Online
               </Typography>
             </div>
-          ) : (
+          </div>
+          <CardMedia
+            className={classes.cover}
+            image="/ServerUP.svg"
+            title="Live from space album cover"
+          />
+        </Card>
+      ) : (
+        <Card className={classes.root}>
+          <div className={classes.details}>
+            <CardContent className={classes.content}>
+              <Typography component="h5" variant="h5">
+                {props.Nama}
+              </Typography>
+              <Typography variant="caption" color="textSecondary">
+                {props.Lokasi}
+              </Typography>
+            </CardContent>
+
             <div className={classes.controls}>
               <IconButton aria-label="coloud">
                 <CloudOffRoundedIcon className={classes.playIcon2} />
@@ -79,14 +99,14 @@ export default function CardServer(props) {
                 Offline
               </Typography>
             </div>
-          )}
-        </div>
-        <CardMedia
-          className={classes.cover}
-          image="/ServerUP.svg"
-          title="Live from space album cover"
-        />
-      </Card>
+          </div>
+          <CardMedia
+            className={classes.cover}
+            image="/ServerDown.svg"
+            title="Live from space album cover"
+          />
+        </Card>
+      )}
     </>
   );
 }

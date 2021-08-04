@@ -4,6 +4,8 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== "production";
 const nextApp = next({ dev });
 const nextHandle = nextApp.getRequestHandler();
+const moment = require("moment");
+const jamIndo = require("moment/locale/id");
 process.env.NTBA_FIX_319 = 1;
 
 const TelegramBot = require("node-telegram-bot-api");
@@ -33,19 +35,36 @@ nextApp.prepare().then(() => {
     if (ip && listIP.find((element) => element == ip) == undefined) {
       listIP.push(ip);
     }
+
     if (ip == "127.0.0.1") {
-      bot.sendMessage("@lvnotify", `Server => ${ip} Telah Connect`);
-    } else if (ip == "192.168.0.27") {
       bot.sendMessage(
         "@lvnotify",
-        `Server => ${ip}  
-          Mbak febri Telah Connect`
+        ` 
+          🔥Conn🔥 ${moment().locale("id", jamIndo).format("LLL")}
+          =========================
+          Server => ${ip} 
+          Jakarta SIMPRUG 
+          Telah Connect ✅
+          =========================
+          Daftar Connect :
+          🎟️ => ${listIP}
+          =========================
+          `
       );
-    } else if (ip == "192.168.0.14") {
+    } else if (ip == "192.168.10.1") {
       bot.sendMessage(
         "@lvnotify",
-        `Server => ${ip}  
-          Mas Dimas Telah Connect`
+        `
+        🔥Conn🔥 ${moment().locale("id", jamIndo).format("LLL")}
+        =========================
+        Server => ${ip} 
+        Jakarta PIK
+        Telah Connect ✅
+        =========================
+        Daftar Connect :
+        🎟️ => ${listIP}
+        =========================
+        `
       );
     }
 
@@ -64,18 +83,32 @@ nextApp.prepare().then(() => {
       }
 
       if (ip == "127.0.0.1") {
-        bot.sendMessage("@lvnotify", `Server => ${ip} Telah Disconnect`);
-      } else if (ip == "192.168.0.27") {
         bot.sendMessage(
           "@lvnotify",
-          `Server => ${ip}  
-            Mbak febri Telah DC`
+          `
+          ❄️DC❄️ ${moment().locale("id", jamIndo).format("LLL")}
+          ============================
+          Server => ${ip} 
+          Jakarta SIMPRUG 
+          Telah Disconnect ❌
+          ============================
+          Daftar Connect :
+          🎟️ => ${listIP}
+          ============================
+          `
         );
-      } else if (ip == "192.168.0.14") {
+      } else if (ip == "192.168.10.1") {
         bot.sendMessage(
           "@lvnotify",
-          `Server => ${ip}  
-            Mas Dimas Telah DC`
+          `❄️DC❄️ ${moment().locale("id", jamIndo).format("LLL")}
+          ============================
+          Server => ${ip} 
+          Jakarta PIK 
+          Telah Disconnect ❌
+          ============================
+          Daftar Connect :
+          🎟️ => ${listIP}
+          ============================`
         );
       }
 
