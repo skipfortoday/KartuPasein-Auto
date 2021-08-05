@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     position: "fixed",
     bottom: 0,
+    background: theme.palette.primary.mainGradient,
   },
   conten: {
     overflowX: "hidden",
@@ -41,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     flexGrow: 1,
+  },
+  appBarColor: {
+    background: theme.palette.primary.mainGradient,
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -50,13 +54,14 @@ const useStyles = makeStyles((theme) => ({
   },
   isi: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(1),
   },
   list: {
     width: 250,
   },
   fullList: {
     width: "auto",
+    background: theme.palette.primary.mainGradient,
   },
 }));
 
@@ -217,11 +222,12 @@ export default function BottomNav({ children }) {
     } else {
       setValue("Data");
     }
+    console.log(value);
   });
   return (
     <div className={classes.conten}>
       <div className={classes.appBar}>
-        <AppBar position="static">
+        <AppBar position="static" className={classes.appBarColor}>
           <Toolbar>
             {value == "Data" ? (
               <IconButton

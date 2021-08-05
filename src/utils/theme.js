@@ -7,10 +7,18 @@ const theme = createMuiTheme({
   palette: {
     type: "light",
     primary: {
-      main: yellow[800],
+      main: yellow[50],
+      mainGradient:
+        "linear-gradient(90deg, rgba(254,255,247,1) 0%, rgba(255,192,0,1) 0%, rgba(255,124,0,1) 100%);",
     },
     secondary: {
       main: grey[700],
+    },
+    tabs: {
+      backgroundColor: "red",
+    },
+    inkBar: {
+      backgroundColor: "yellow",
     },
   },
 });
