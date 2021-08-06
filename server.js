@@ -1,5 +1,6 @@
 const app = require("express")();
 const next = require("next");
+const cors = require("cors");
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== "production";
 const nextApp = next({ dev });
@@ -8,10 +9,12 @@ const moment = require("moment");
 const jamIndo = require("moment/locale/id");
 process.env.NTBA_FIX_319 = 1;
 
+app.use(cors());
+
 const TelegramBot = require("node-telegram-bot-api");
 
 // replace the value below with the Telegram token you receive from @BotFather
-const token = "1826120694:AAHgzuV5PM_gCxQ6jNJTjMZW4Mi6rDEKW2k";
+const token = "1826120694:AAH8K6MZExoGhvIRB-5MdSDf6L5MKKCM44s";
 
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, { polling: true });
