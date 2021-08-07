@@ -16,7 +16,7 @@ export default async function handler(req, res) {
                         ${
                           items.NamaDokter == null
                             ? null
-                            : `'${items.NamaDokter.replace("'", "''")}'`
+                            : `'${items.NamaDokter.replace(/'/g, "''")}'`
                         },
                         ${items.Status == null ? null : `'${items.Status}'`},
                         ${

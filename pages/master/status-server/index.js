@@ -32,9 +32,15 @@ const StatusServer = () => {
 
   useEffect(() => {
     if (render == true) {
-      const socket = io(`${Config.baseURL}`);
+      const socket = io(`${Config.baseURL}`,
+	{
+		extraHeaders: {
+			Ip: 'Test data ip'	
+		} 
+	});
       socket.on("connect", () => {
         socket.on("some event", (msg) => {
+	console.log(msg.list)
           msg.list
             ? handleStatusChange(msg.list)
             : console.log("Hmm Something with Socket");

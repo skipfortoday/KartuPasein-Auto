@@ -1,4 +1,4 @@
-const app = require("express")();
+﻿const app = require("express")();
 const next = require("next");
 const cors = require("cors");
 const port = parseInt(process.env.PORT, 10) || 3000;
@@ -29,8 +29,10 @@ nextApp.prepare().then(() => {
   const server = require("http").Server(app);
   const io = require("socket.io")(server);
   let listIP = [];
+  let listClient = [];
 
   io.on("connect", (socket) => {
+    var address = socket.handshake.headers;
     const ip =
       socket.handshake.headers["x-forwarded-for"] ||
       socket.conn.remoteAddress.split(":")[3];
@@ -39,7 +41,16 @@ nextApp.prepare().then(() => {
       listIP.push(ip);
     }
 
-    if (ip == "127.0.0.1") {
+    let clientName = socket.handshake.headers.clientname;
+
+    if (
+      clientName &&
+      listClient.find((element) => element == clientName) == undefined
+    ) {
+      listClient.push(clientName);
+    }
+
+    if (clientName == "SERVER-JK2") {
       bot.sendMessage(
         "@lvnotify",
         ` 
@@ -54,7 +65,7 @@ nextApp.prepare().then(() => {
           =========================
           `
       );
-    } else if (ip == "192.168.10.1") {
+    } else if (clientName == "SERVER-JK1") {
       bot.sendMessage(
         "@lvnotify",
         `
@@ -73,9 +84,10 @@ nextApp.prepare().then(() => {
 
     io.emit("some event", {
       connect: "true",
-      list: listIP,
+      list: listClient,
     });
-    console.log(listIP);
+
+    console.log(listClient);
     socket.on("disconnect", async function () {
       if (ip) {
         for (var i = 0; i < listIP.length; i++) {
@@ -85,7 +97,7 @@ nextApp.prepare().then(() => {
         }
       }
 
-      if (ip == "127.0.0.1") {
+      if (clientName == "SERVER-JK2") {
         bot.sendMessage(
           "@lvnotify",
           `
@@ -100,7 +112,7 @@ nextApp.prepare().then(() => {
           ============================
           `
         );
-      } else if (ip == "192.168.10.1") {
+      } else if (clientName == "SERVER-JK1") {
         bot.sendMessage(
           "@lvnotify",
           `❄️DC❄️ ${moment().locale("id", jamIndo).format("LLL")}
@@ -117,7 +129,7 @@ nextApp.prepare().then(() => {
 
       io.emit("some event", {
         connect: "true",
-        list: listIP,
+        list: listClient,
       });
     });
   });
